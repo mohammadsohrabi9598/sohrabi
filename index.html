@@ -3,146 +3,1021 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پایه ششم - دبستان پسرانه خیام</title>
+    <title>سفر علمی ششم | دبستان پسرانه خیام</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <style>
+        :root {
+            --bg-dark: #070b19;
+            --bg-mid: #0f1c3f;
+            --glass: rgba(17, 28, 60, 0.65);
+            --glass-light: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.16);
+            --cyan: #38bdf8;
+            --emerald: #34d399;
+            --amber: #fbbf24;
+            --purple: #c084fc;
+            --text-main: #f8fafc;
+            --text-soft: #cbd5e1;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
         }
+
         body {
-            font-family: Tahoma, Arial, sans-serif;
-            background: linear-gradient(135deg, #e0f7fa, #e8f5e9);
-            color: #333;
-            line-height: 1.8;
-            padding: 20px;
+            background: radial-gradient(circle at top right, #162447, #070b19 60%, #050814);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.9;
         }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+
+        /* --- فضای معلق و المان‌های متحرک پس‌زمینه --- */
+        .floating-space {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
             overflow: hidden;
         }
-        header {
-            background: linear-gradient(135deg, #1976d2, #00897b);
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.45;
+            animation: driftOrb 18s ease-in-out infinite alternate;
         }
-        header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
+
+        .orb-1 {
+            width: 380px; height: 380px;
+            background: #2563eb;
+            top: -80px; right: -80px;
         }
-        header p {
-            font-size: 16px;
-            opacity: 0.9;
+
+        .orb-2 {
+            width: 320px; height: 320px;
+            background: #7c3aed;
+            bottom: 10%; left: -60px;
+            animation-delay: -5s;
         }
-        .info-box {
+
+        .orb-3 {
+            width: 260px; height: 260px;
+            background: #059669;
+            top: 45%; right: 20%;
+            opacity: 0.25;
+            animation-delay: -10s;
+        }
+
+        .float-icon {
+            position: absolute;
+            font-size: 2.2rem;
+            opacity: 0.22;
+            filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.4));
+            animation: floatItem 10s ease-in-out infinite;
+            user-select: none;
+        }
+
+        .fi-1 { top: 12%; left: 8%; animation-duration: 9s; font-size: 2.8rem; }
+        .fi-2 { top: 24%; right: 6%; animation-duration: 12s; animation-delay: -2s; }
+        .fi-3 { top: 55%; left: 5%; animation-duration: 14s; animation-delay: -4s; font-size: 2.6rem; }
+        .fi-4 { top: 75%; right: 9%; animation-duration: 11s; animation-delay: -1s; }
+        .fi-5 { top: 38%; left: 22%; animation-duration: 15s; animation-delay: -6s; opacity: 0.14; }
+        .fi-6 { top: 82%; left: 25%; animation-duration: 13s; animation-delay: -3s; }
+        .fi-7 { top: 15%; left: 45%; animation-duration: 16s; animation-delay: -7s; opacity: 0.15; }
+
+        @keyframes driftOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, 30px) scale(1.1); }
+            100% { transform: translate(-30px, 50px) scale(0.95); }
+        }
+
+        @keyframes floatItem {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-28px) rotate(12deg); }
+        }
+
+        @keyframes gentleHover {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- ساختار اصلی --- */
+        .wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 1.5rem 1.2rem 3rem;
+        }
+
+        /* نوار بالای معلق */
+        .top-nav {
             display: flex;
-            justify-content: space-around;
-            background: #ffecb3;
-            padding: 15px;
-            text-align: center;
-            font-weight: bold;
-            color: #5d4037;
-            border-bottom: 2px solid #ffe082;
+            justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 1rem;
+            background: var(--glass);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid var(--glass-border);
+            padding: 0.9rem 1.5rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
         }
-        .content {
-            padding: 30px;
+
+        .school-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
         }
-        .section-title {
-            color: #00796b;
-            border-bottom: 3px solid #b2dfdb;
-            padding-bottom: 8px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-            font-size: 20px;
+
+        .school-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--cyan), #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 0 18px rgba(56, 189, 248, 0.45);
+            animation: gentleHover 4s ease-in-out infinite;
         }
-        .science-cards {
+
+        .school-title h1 {
+            font-size: 1.15rem;
+            color: #fff;
+        }
+
+        .school-title span {
+            font-size: 0.82rem;
+            color: var(--cyan);
+        }
+
+        .teacher-pill {
+            background: rgba(52, 211, 153, 0.14);
+            border: 1px solid rgba(52, 211, 153, 0.35);
+            color: var(--emerald);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        /* --- کارت خوشامدگویی خانم دارابی --- */
+        .hero-card {
+            background: linear-gradient(145deg, rgba(23, 37, 84, 0.78), rgba(15, 23, 42, 0.85));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 28px;
+            padding: 2.2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255,255,255,0.15);
+            position: relative;
+            overflow: hidden;
+            animation: fadeSlideUp 0.7s ease-out;
+        }
+
+        .hero-card::after {
+            content: "🧪";
+            position: absolute;
+            left: 25px;
+            bottom: 10px;
+            font-size: 5rem;
+            opacity: 0.1;
+            animation: floatItem 6s ease-in-out infinite;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            color: var(--amber);
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-card h2 {
+            font-size: 1.7rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to left, #ffffff, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-message {
+            font-size: 1.05rem;
+            color: var(--text-soft);
+            max-width: 900px;
+        }
+
+        .hero-message strong {
+            color: #fff;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-heading h3 {
+            font-size: 1.4rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-heading p {
+            font-size: 0.92rem;
+            color: var(--cyan);
+        }
+
+        /* --- شبکه کارت‌های معلق فصل‌ها --- */
+        .chapters-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 1.5rem;
         }
-        .card {
-            background: #f1f8e9;
-            border-right: 5px solid #4caf50;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+
+        .chapter-card {
+            background: var(--glass);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--glass-border);
+            border-radius: 22px;
+            padding: 1.6rem;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+            animation: fadeSlideUp 0.6s ease backwards;
         }
-        .card h3 {
-            color: #2e7d32;
-            margin-bottom: 10px;
-            font-size: 18px;
+
+        .chapter-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--cyan);
+            background: rgba(23, 39, 82, 0.85);
+            box-shadow: 0 20px 40px rgba(56, 189, 248, 0.2);
         }
-        .card p {
-            font-size: 14px;
-            color: #555;
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
         }
+
+        .chap-num {
+            background: rgba(56, 189, 248, 0.16);
+            color: var(--cyan);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            padding: 0.25rem 0.85rem;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: bold;
+        }
+
+        .chap-icon {
+            font-size: 2rem;
+            transition: transform 0.35s ease;
+        }
+
+        .chapter-card:hover .chap-icon {
+            transform: scale(1.25) rotate(8deg);
+        }
+
+        .chapter-card h4 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .chapter-card p {
+            font-size: 0.92rem;
+            color: var(--text-soft);
+            margin-bottom: 1.2rem;
+        }
+
+        .card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--amber);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* --- نمای صفحه اختصاصی هر فصل --- */
+        #chapter-page {
+            display: none;
+            animation: fadeSlideUp 0.45s ease-out;
+        }
+
+        .page-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-glass {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--glass);
+            color: #fff;
+            border: 1px solid var(--glass-border);
+            padding: 0.65rem 1.3rem;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.25s;
+            backdrop-filter: blur(12px);
+        }
+
+        .btn-glass:hover {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: var(--cyan);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            border: none;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.45);
+        }
+
+        .story-container {
+            background: rgba(15, 23, 42, 0.82);
+            backdrop-filter: blur(22px);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 28px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .story-header {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .story-icon-big {
+            width: 72px;
+            height: 72px;
+            flex-shrink: 0;
+            border-radius: 22px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(192, 132, 252, 0.25));
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.6rem;
+            animation: gentleHover 4s ease-in-out infinite;
+        }
+
+        .story-header-text span {
+            color: var(--amber);
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .story-header-text h2 {
+            font-size: 1.85rem;
+            color: #fff;
+            margin-top: 0.2rem;
+        }
+
+        .story-body {
+            font-size: 1.08rem;
+            color: #e2e8f0;
+            text-align: justify;
+            margin-bottom: 2rem;
+        }
+
+        .story-body p {
+            margin-bottom: 1.2rem;
+        }
+
+        .highlight-box {
+            background: rgba(52, 211, 153, 0.08);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            border-right: 5px solid var(--emerald);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .highlight-box h4 {
+            color: var(--emerald);
+            margin-bottom: 0.8rem;
+            font-size: 1.12rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-box ul {
+            padding-right: 1.3rem;
+            color: #f1f5f9;
+        }
+
+        .highlight-box li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* باکس پرسش و چالش خانم دارابی */
+        .challenge-box {
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 16px;
+            padding: 1.4rem;
+            margin-bottom: 2rem;
+        }
+
+        .challenge-box h4 {
+            color: var(--amber);
+            margin-bottom: 0.6rem;
+        }
+
+        .answer-reveal {
+            display: none;
+            margin-top: 0.9rem;
+            padding-top: 0.9rem;
+            border-top: 1px dashed rgba(251, 191, 36, 0.35);
+            color: #fef3c7;
+        }
+
+        /* پل ارتباطی به فصل بعد */
+        .next-link-box {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(168, 85, 247, 0.14));
+            border: 1px solid rgba(192, 132, 252, 0.35);
+            border-radius: 18px;
+            padding: 1.5rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .next-link-box span {
+            font-size: 0.88rem;
+            color: var(--purple);
+            font-weight: bold;
+        }
+
+        .next-link-box p {
+            margin-top: 0.4rem;
+            color: #f1f5f9;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* --- فوتر --- */
         footer {
+            margin-top: 4rem;
             text-align: center;
-            background: #37474f;
-            color: white;
-            padding: 15px;
-            font-size: 14px;
-            margin-top: 30px;
+            padding: 1.8rem 1rem;
+            background: var(--glass);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--glass-border);
+            border-radius: 22px;
+            color: var(--text-soft);
+            font-size: 0.95rem;
+        }
+
+        footer strong {
+            color: var(--cyan);
+        }
+
+        footer .sub-credit {
+            margin-top: 0.4rem;
+            font-size: 0.84rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 640px) {
+            .hero-card, .story-container {
+                padding: 1.4rem;
+            }
+            .story-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-card h2, .story-header-text h2 {
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- هدر یا سربرگ سایت -->
-        <header>
-            <h1>🏫 دبستان پسرانه خیام</h1>
-            <p>سایت آموزشی پایه ششم ابتدایی</p>
-        </header>
+    <!-- المان‌های متحرک در فضای معلق -->
+    <div class="floating-space">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="float-icon fi-1">⚛️</div>
+        <div class="float-icon fi-2">🔬</div>
+        <div class="float-icon fi-3">🪐</div>
+        <div class="float-icon fi-4">🧬</div>
+        <div class="float-icon fi-5">🚀</div>
+        <div class="float-icon fi-6">🌿</div>
+        <div class="float-icon fi-7">⚡</div>
+    </div>
 
-        <!-- اطلاعات کلاس و معلم -->
-        <div class="info-box">
-            <div>👩‍🏫 آموزگار: سرکار خانم کبری دارابی</div>
-            <div>👥 تعداد دانش‌آموزان: ۱۸ نفر</div>
-            <div>📚 موضوع ویژه: علوم تجربی پایه ششم</div>
-        </div>
-
-        <!-- محتوای اصلی سایت -->
-        <div class="content">
-            <h2 class="section-title">✨ خوش آمدید دانش‌آموزان عزیز!</h2>
-            <p>این صفحه مخصوص بچه‌های پرانرژی و خلاق پایه ششم دبستان خیام است. در اینجا مطالب و نکات جذاب کتاب علوم را با هم مرور می‌کنیم تا دنیای اطرافمان را بهتر بشناسیم.</p>
-
-            <h2 class="section-title">🔬 مطالب آموزشی علوم پایه ششم</h2>
-            
-            <div class="science-cards">
-                <!-- کارت اول: ساخت کاغذ -->
-                <div class="card" style="border-right-color: #ff9800;">
-                    <h3 style="color: #e65100;">🌳 ساخت کاغذ و قطع درختان</h3>
-                    <p>برای ساخت هر تن کاغذ باید درختان زیادی قطع شوند. با بازیافت کاغذهای باطله و استفاده‌ی بهینه، می‌توانیم از قطع درختان بیشتر جلوگیری کرده و از طبیعت و محیط زیست خود محافظت کنیم.</p>
-                </div>
-
-                <!-- کارت دوم: لایه‌های زمین -->
-                <div class="card" style="border-right-color: #2196f3;">
-                    <h3 style="color: #0d47a1;">🌍 لایه‌های زمین</h3>
-                    <p>کره زمین از لایه‌های مختلفی تشکیل شده است: **پوسته** (سطح بیرونی که روی آن زندگی می‌کنیم)، **گوشته** (لایه میانی و نیمه مذاب) و **هسته** (بخش مرکزی و بسیار داغ زمین در مرکز آن).</p>
-                </div>
-
-                <!-- کارت سوم: آتشفشان و زلزله -->
-                <div class="card" style="border-right-color: #f44336;">
-                    <h3 style="color: #b71c1c;">🌋 آتشفشان و زلزله</h3>
-                    <p>حرکت مواد مذاب در اعماق زمین و فشار لایه‌های سنگ باعث ایجاد پدیده‌هایی مثل آتشفشان و زمین‌لرزه (زلزله) می‌شود. آگاهی از نکات ایمنی در هنگام زلزله برای همه ما یک ضرورت مهم است.</p>
+    <div class="wrapper">
+        <!-- نوار بالای صفحه -->
+        <nav class="top-nav">
+            <div class="school-brand" style="cursor:pointer;" onclick="goHome()">
+                <div class="school-logo">🔭</div>
+                <div class="school-title">
+                    <h1>دبستان پسرانه خیام</h1>
+                    <span>پایگاه جزوات داستان‌وار علوم پایه ششم</span>
                 </div>
             </div>
-        </div>
+            <div class="teacher-pill">👩‍🏫 با راهنمایی سرکار خانم کبری دارابی</div>
+        </nav>
 
-        <!-- پاورقی -->
+        <!-- صفحه اصلی: پیام خانم دارابی + لیست فصل‌ها -->
+        <main id="home-page">
+            <section class="hero-card">
+                <div class="hero-badge">✨ پیام اختصاصی معلم علوم شما</div>
+                <h2>سلام به پسران باهوش و کنجکاو کلاس ششم!</h2>
+                <p class="hero-message">
+                    بچه‌های عزیزم، من <strong>خانم کبری دارابی</strong> هستم. این وب‌سایت، <strong>خلاصه‌ی جزوات فصل‌های علوم پایه ششم</strong> شماست که خیلی خوشحالم اینجا در خدمتتون هستم و می‌تونید به راحتی ازش استفاده کنید.
+                    سعی کنید حتماً مطالب رو با دقت بخونید؛ چون کل کتاب علوم رو به زبان یک <strong>داستانِ پیوسته و ماجراجویانه</strong> براتون آماده کردم که هر فصل شما رو به فصل بعدی می‌رسونه! روی هر سرفصل که کلیک کنید، وارد صفحه مخصوص همون فصل می‌شید تا هم داستانش رو بخونید و هم نکات مهم امتحانی رو مرور کنید. آماده‌اید سفر علمیمون رو شروع کنیم؟ 🚀
+                </p>
+            </section>
+
+            <div class="section-heading">
+                <h3>📚 نقشه سفر ۱۴ فصل علوم ششم</h3>
+                <p>روی هر کارت کلیک کنید تا وارد صفحه فصل شوید</p>
+            </div>
+
+            <div class="chapters-grid" id="chapters-grid">
+                <!-- کارت‌ها توسط جاوااسکریپت ساخته می‌شوند -->
+            </div>
+        </main>
+
+        <!-- صفحه داخلی هر فصل -->
+        <section id="chapter-page">
+            <div class="page-controls">
+                <button class="btn-glass" onclick="goHome()">🏠 بازگشت به صفحه اصلی</button>
+                <span id="page-progress" style="color: var(--cyan); font-weight: bold;"></span>
+            </div>
+
+            <article class="story-container">
+                <div class="story-header">
+                    <div class="story-icon-big" id="chap-icon-big"></div>
+                    <div class="story-header-text">
+                        <span id="chap-badge-text"></span>
+                        <h2 id="chap-title"></h2>
+                    </div>
+                </div>
+
+                <div class="story-body" id="chap-story"></div>
+
+                <div class="highlight-box">
+                    <h4>📌 نکات طلایی جزوه خانم دارابی (مهم برای امتحان)</h4>
+                    <ul id="chap-notes"></ul>
+                </div>
+
+                <div class="challenge-box">
+                    <h4>💡 چالش فکری کلاس ششم:</h4>
+                    <p id="chap-question"></p>
+                    <button class="btn-glass" style="margin-top: 0.8rem; font-size: 0.88rem;" onclick="toggleAnswer()">👁️ مشاهده پاسخ خانم دارابی</button>
+                    <div class="answer-reveal" id="chap-answer"></div>
+                </div>
+
+                <div class="next-link-box" id="next-bridge-box">
+                    <span>🔗 ادامه ماجرا در فصل بعدی:</span>
+                    <p id="chap-bridge"></p>
+                </div>
+
+                <div class="bottom-nav">
+                    <button class="btn-glass" id="btn-prev" onclick="navigateChapter(-1)">⬅️ فصل قبلی</button>
+                    <button class="btn-glass btn-primary" id="btn-next" onclick="navigateChapter(1)">ادامه داستان: فصل بعدی ➡️</button>
+                </div>
+            </article>
+        </section>
+
+        <!-- فوتر -->
         <footer>
-            تمامی حقوق این صفحه متعلق به دانش‌آموزان پایه ششم دبستان پسرانه خیام است. 🌟
+            <div>© تمامی حقوق مادی و معنوی این وب‌سایت متعلق به <strong>دبستان پسرانه خیام</strong> می‌باشد.</div>
+            <div class="sub-credit">مدیریت مدرسه: جناب آقای محمد سهرابی | معلم و طراح محتوای علمی: سرکار خانم کبری دارابی</div>
         </footer>
     </div>
 
+    <script>
+        const chapters = [
+            {
+                num: "فصل اول",
+                title: "زنگ علوم (شروع یک راز در آزمایشگاه)",
+                icon: "🔍",
+                preview: "همه چیز از یک جعبه مرموز سر کلاس خانم دارابی و یادگیری روش دانشمندان شروع شد...",
+                story: `
+                    <p>صبح یکی از روزهای زیبای پاییزی در <strong>دبستان پسرانه خیام</strong>، خانم دارابی با لبخندی مرموز و یک جعبه چوبی قفل‌شده وارد کلاس ششم شد. بچه‌ها با هیجان پرسیدند: «خانم، داخل جعبه چیه؟»</p>
+                    <p>خانم دارابی گفت: «پسران گلم، یک دانشمند واقعی قبل از باز کردن جعبه حدس نمی‌زنه؛ بلکه از <strong>روش علمی</strong> استفاده می‌کنه! یعنی اول با حواس پنج‌گانه <strong>مشاهده دقیق</strong> می‌کنه (مثلاً جعبه رو تکون می‌ده و به صداش گوش می‌ده)، بعد <strong>پرسش</strong> طرح می‌کنه، یک <strong>فرضیه</strong> (حدس علمی) می‌سازه، با <strong>آزمایش</strong> امتحانش می‌کنه و در نهایت <strong>نتیجه‌گیری</strong> می‌کنه.»</p>
+                    <p>وقتی بچه‌ها با کمک روش علمی فهمیدند داخل جعبه چیزی سبک و کاغذی هست، قفل باز شد! داخل جعبه یک دفترچه قدیمی و عجیب قرار داشت...</p>
+                `,
+                notes: [
+                    "مراحل روش علمی به ترتیب: ۱. مشاهده و طرح پرسش ۲. جمع‌آوری اطلاعات ۳. فرضیه سازی ۴. آزمایش و بررسی ۵. نتیجه‌گیری و گزارش.",
+                    "فرضیه یعنی یک حدس هوشمندانه و علمی که ممکن است در آزمایش درست یا نادرست از آب دربیاید.",
+                    "ابزارهایی مثل ذره‌بین، ترازو و خط‌کش دقت مشاهده ما را بالا می‌برند."
+                ],
+                question: "اگر چراغ مطالعه اتاقت روشن نشود و تو حدس بزنی «شاید سیمش از پریز درآمده»، به این حدس در روش علمی چه می‌گوییم؟",
+                answer: "به این حدس علمی «فرضیه» می‌گوییم که با نگاه کردن به پریز (آزمایش و مشاهده) می‌توانیم درستی آن را بررسی کنیم!",
+                bridge: "بچه‌ها تا خواستند دفترچه قدیمی را ورق بزنند، بوی چوب و کاغذ کاهی توجهشان را جلب کرد! خانم دارابی پرسید: «راستی می‌دونید این دفترچه چه سرگذشتی داشته تا به دست شما برسه؟»"
+            },
+            {
+                num: "فصل دوم",
+                title: "سرگذشت دفتر من (از جنگل تا نیمکت مدرسه)",
+                icon: "📓",
+                preview: "دفترچه مرموز ما رو به دل جنگل‌ها برد تا ببینیم چوب درختان چطور به کاغذ تبدیل می‌شود...",
+                story: `
+                    <p>بچه‌ها دفترچه را لمس کردند و خانم دارابی داستان شگفت‌انگیز آن را تعریف کرد: «این برگه‌های سفید زمانی شاخه و تنه یک درخت تنومند در جنگل بودند! درخت‌ها قطع می‌شن، پوستشون جدا می‌شه، به تکه‌های ریز خرد می‌شن و با آب و مواد دیگه به <strong>خمیر کاغذ</strong> تبدیل می‌شن تا در نهایت برگه‌های دفتر شما رو بسازن.»</p>
+                    <p>یکی از دانش‌آموزان با ناراحتی گفت: «پس یعنی هر دفتری که اسراف می‌کنیم، یک درخت آسیب می‌بینه؟» خانم دارابی سر تکان داد: «آفرین! به همین خاطره که <strong>صرفه‌جویی</strong> و <strong>بازیافت کاغذ</strong> مثل نجات دادن جون درخت‌هاست. با بازیافت، دیگه نیازی نیست درخت‌های جدید قطع بشن و زباله‌های کمتری هم تولید می‌شه.»</p>
+                `,
+                notes: [
+                    "منبع اصلی تولید کاغذ نو، چوب درختان است.",
+                    "بازیافت یعنی جمع‌آوری کاغذهای باطله و تبدیل دوباره آن‌ها به کاغذ یا مقوا بدون قطع درختان جدید.",
+                    "بهترین راه حفاظت از جنگل‌ها: کاهش مصرف (صرفه‌جویی)، استفاده دوباره (مثلاً پشت برگه باطله) و بازیافت."
+                ],
+                question: "چرا بازیافت کاغذ علاوه بر نجات درختان، برای آب و هوای شهر هم مفید است؟",
+                answer: "چون درختان هوا را تصفیه می‌کنند و تولید کاغذ بازیافتی هم به آب و انرژی بسیار کمتری نسبت به تولید کاغذ از چوب نیاز دارد.",
+                bridge: "حالا یک سوال بزرگ ذهن بچه‌ها را قلقلک می‌داد: چطور در کارخانه، چوب قهوه‌ای و زبر را تبدیل به کاغذ نرم و سفید می‌کنند؟ وقت سر زدن به کارخانه کاغذسازی است!"
+            },
+            {
+                num: "فصل سوم",
+                title: "کارخانه کاغذسازی (جادوی تغییرات و مواد)",
+                icon: "🏭",
+                preview: "ورود به بخش شیمیایی داستان! جایی که تغییرات فیزیکی، شیمیایی و اسیدها را می‌شناسیم...",
+                story: `
+                    <p>در ادامه ماجرا، خانم دارابی بچه‌ها را در خیال به داخل کارخانه کاغذسازی برد. آنجا دستگاه‌های بزرگ چوب را رنده و خرد می‌کردند. خانم دارابی توضیح داد: «وقتی چوب فقط خرد می‌شه یا کاغذ رو تا می‌کنیم، جنسش عوض نمی‌شه؛ به این می‌گیم <strong>تغییر فیزیکی</strong>. اما وقتی داخل دیگ‌های کارخانه به خمیر مواد رنگ‌بر اضافه می‌کنن یا وقتی کاغذی رو می‌سوزونیم و خاکستر می‌شه، ماده جدیدی ساخته می‌شه که بهش می‌گیم <strong>تغییر شیمیایی</strong>!»</p>
+                    <p>بچه‌ها آنجا با موادی به نام <strong>اسیدها</strong> (مثل آب‌لیمو و سرکه) و <strong>بازها</strong> (مثل مایع صابون و جوش‌شیرین) و کاغذ شناساگر آشنا شدند و دیدند که اگر از لوله‌های آهنی کارخانه در برابر رطوبت و هوا مراقبت نشود، تغییر شیمیایی <strong>زنگ زدن آهن</strong> اتفاق می‌افتد.</p>
+                    <p>ناگهان لای صفحات آخر دفترچه، یک نقشه قدیمی ظاهر شد که مسیر یک تونل مخفی به سمت مرکز زمین را نشان می‌داد!</p>
+                `,
+                notes: [
+                    "تغییر فیزیکی: فقط شکل، اندازه یا حالت ماده تغییر می‌کند و ماده جدیدی ساخته نمی‌شود (مثل ذوب یخ، بریدن کاغذ).",
+                    "تغییر شیمیایی: ماده جدیدی با خواص متفاوت به وجود می‌آید و به راحتی برنمی‌گردد (مثل پختن کیک، سوختن چوب، زنگ زدن آهن).",
+                    "برای تشخیص اسیدها و بازها از کاغذ شناساگر (تورنسل/لیتموس) یا آب کلم بنفش استفاده می‌شود، نه چشیدن!"
+                ],
+                question: "خمیر کردن چوب با آب تغییر فیزیکی است یا شیمیایی؟ و سفید کردن خمیر با مواد رنگ‌بر چطور؟",
+                answer: "خرد و خمیر کردن چوب با آب تغییر فیزیکی است؛ اما سفید کردن خمیر با مواد شیمیایی رنگ‌بر و تغییر رنگ آن، یک تغییر شیمیایی است.",
+                bridge: "بچه‌ها نقشه را دنبال کردند و به یک کاوشگر زیرزمینی رسیدند! وقتش است همراه کاوشگر به اعماق زمین سفر کنیم..."
+            },
+            {
+                num: "فصل چهارم",
+                title: "سفر به اعماق زمین (ماجراجویی در لایه‌های پنهان)",
+                icon: "🌋",
+                preview: "سوار بر کاوشگر از پوسته می‌گذریم تا به داغ‌ترین نقطه سیاره زمین برسیم...",
+                story: `
+                    <p>بچه‌های کلاس ششم کلاه ایمنی پوشیدند و با کاوشگر خیالی به دل زمین رفتند! اولین لایه، <strong>پوسته</strong> سنگی و نازکی بود که ما رویش زندگی می‌کنیم. کمی پایین‌تر، دما به شدت بالا رفت و وارد ضخیم‌ترین لایه زمین یعنی <strong>گوشته</strong> شدند که بخش بالایی آن حالت خمیری و نرم دارد.</p>
+                    <p>خانم دارابی از بی‌سیم گفت: «دانشمندان تا این عمق رو حفر نکردن! بلکه با بررسی <strong>امواج لرزه‌ای</strong> (مثل ضربه زدن به هندوانه برای فهمیدن توپُر یا رسیده‌بودنش) فهمیدن زیر گوشته یک <strong>هسته خارجی مایع</strong> و در مرکز زمین یک <strong>هسته داخلی جامد</strong> و فوق‌العاده داغ از جنس آهن و نیکل وجود داره!»</p>
+                `,
+                notes: [
+                    "دانشمندان به کمک سرعت و مسیر امواج لرزه‌ای (زلزله) و مواد آتشفشانی به ساختار درون زمین پی برده‌اند.",
+                    "۴ لایه زمین از بیرون به داخل: ۱. پوسته (جامد و نازک) ۲. گوشته (ضخیم‌ترین لایه) ۳. هسته خارجی (مایع) ۴. هسته داخلی (جامد).",
+                    "هر چه به مرکز زمین نزدیک‌تر می‌شویم، دما، فشار و تراکم مواد افزایش می‌یابد."
+                ],
+                question: "چرا با اینکه هسته داخلی از هسته خارجی داغ‌تر است، اما به جای مایع بودن، حالت جامد دارد؟",
+                answer: "به خاطر فشار فوق‌العاده زیاد لایه‌های بالایی روی مرکز زمین، اتم‌های آهن و نیکل نمی‌توانند از هم فاصله بگیرند و به حالت جامد باقی می‌مانند.",
+                bridge: "ناگهان کاوشگر تکانی خورد! بچه‌ها با تعجب پرسیدند: چرا سطح زمین لرزید؟ بیایید ببینیم در فصل پنجم چه خبر است!"
+            },
+            {
+                num: "فصل پنجم",
+                title: "زمین پویا (راز لرزه‌ها و آتشفشان‌ها)",
+                icon: "⛰️",
+                preview: "زمین زنده و پویاست! ورقه‌های سنگی حرکت می‌کنند و کوه و زلزله می‌سازند...",
+                story: `
+                    <p>کاوشگر به سمت بالا حرکت کرد و خانم دارابی راز تکان خوردن زمین را فاش کرد: «پوسته زمین یک‌تکه نیست! بلکه مثل تکه‌های پازل از بخش‌هایی به نام <strong>ورقه‌های سنگ‌کره</strong> ساخته شده که روی بخش خمیری گوشته شناورن و خیلی آهسته حرکت می‌کنن.»</p>
+                    <p>وقتی این ورقه‌ها به هم برخورد می‌کنند یا کنار هم می‌لغزند، در محل شکستگی‌ها یعنی <strong>گسل‌ها</strong> انرژی زیادی جمع می‌شود و ناگهان به شکل <strong>زمین‌لرزه</strong> آزاد می‌شود؛ یا مواد مذاب (ماگما) راهی به بیرون پیدا می‌کنند و <strong>آتشفشان</strong> می‌سازند! بچه‌ها در همین حین تمام نکات ایمنی هنگام زلزله (پناه گرفتن زیر میز محکم و دور شدن از شیشه) را تمرین کردند.</p>
+                `,
+                notes: [
+                    "سنگ‌کره شامل پوسته و بخش جامدِ بالای گوشته است که به چند ورقه تقسیم شده است.",
+                    "در اثر حرکت ورقه‌ها، گسل‌ها، زمین‌لرزه، کوه‌ها و آتشفشان‌ها به وجود می‌آیند.",
+                    "ماگما وقتی به سطح زمین می‌رسد و گازهایش خارج می‌شود، «گدازه» نام دارد."
+                ],
+                question: "در هنگام وقوع زلزله داخل کلاس درس، ایمن‌ترین کار چیست؟",
+                answer: "خونسردی خود را حفظ کنیم، کنار دیوارهای باربر یا زیر میز محکم پناه بگیریم، دست‌ها را روی سر بگذاریم و از پنجره‌ها و قفسه‌ها دور بمانیم.",
+                bridge: "کاوشگر ما بالاخره با سرعت از زیر زمین به حیاط ورزش مدرسه خیام پرتاب شد! حالا باید ببینیم چطور حرکتش رو کنترل کنیم..."
+            },
+            {
+                num: "فصل ششم",
+                title: "ورزش و نیرو (۱) (بازی با سرعت و حرکت)",
+                icon: "⚽",
+                preview: "توپ فوتبال در حیاط مدرسه خیام به ما یاد می‌دهد که نیرو با اجسام چه کارهایی می‌کند...",
+                story: `
+                    <p>بچه‌ها از کاوشگر پیاده شدند و زنگ ورزش شروع شد! خانم دارابی توپ فوتبالی را وسط زمین گذاشت و گفت: «چرا این توپ حرکت نمی‌کنه؟ چون هنوز بهش <strong>نیرو</strong> وارد نشده! نیرو یعنی کشیدن یا هل دادن.»</p>
+                    <p>وقتی امیرحسین شوت زد، توپ ساکن شروع به حرکت کرد؛ وقتی محمد توپ را پاس داد، <strong>جهت حرکت</strong> عوض شد؛ وقتی دروازه‌بان توپ را گرفت، <strong>سرعتش</strong> کم شد و ایستاد؛ و وقتی روی تشک نرم پریدند، تشک تغییر شکل داد! بچه‌ها فهمیدند نیرو در همه ورزش‌ها نقش اول را بازی می‌کند.</p>
+                `,
+                notes: [
+                    "نیرو اثر متقابل دو جسم بر هم (کشش یا رانش) است.",
+                    "آثار نیرو بر اجسام: ۱. شروع حرکت ۲. توقف یا کاهش سرعت ۳. افزایش سرعت ۴. تغییر جهت حرکت ۵. تغییر شکل جسم.",
+                    "وقتی توپ ساکن است، نیروهای وارد بر آن متوازن (برابر و در جهت مخالف) هستند."
+                ],
+                question: "وقتی دوچرخه سواری ترمز می‌گیرد، چه اثری از نیرو را مشاهده می‌کنیم؟",
+                answer: "کاهش سرعت و توقف جسم در حال حرکت (که توسط نیروی اصطکاک ترمز ایجاد می‌شود).",
+                bridge: "امیرحسین پرسید: «خانم، من برای شوت زدن باید پام به توپ بخوره؛ اما چرا توپ وقتی می‌ره هوا، بدون اینکه کسی بکشتش پایین میاد؟» جوابش در فصل هفتم است!"
+            },
+            {
+                num: "فصل هفتم",
+                title: "ورزش و نیرو (۲) (نیروهای نامرئی و تماسی)",
+                icon: "🧲",
+                preview: "کشف تفاوت نیروهای تماسی مثل اصطکاک و نیروهای غیرتماسی مثل جاذبه زمین و آهنربا...",
+                story: `
+                    <p>خانم دارابی یک آهنربا و یک نیروسنج از کیفش بیرون آورد تا سوال امیرحسین را جواب بدهد: «آفرین! دو نوع نیرو داریم. وقتی برای وارد کردن نیرو باید دو جسم با هم تماس داشته باشن، بهش می‌گیم <strong>نیروی تماسی</strong>؛ مثل شوت زدن یا <strong>نیروی اصطکاک</strong> که بین کفش‌های شما و کف حیاط وجود داره و مانع لیز خوردنتون می‌شه.»</p>
+                    <p>«اما نیروهایی هم هستن که از راه دور و بدون تماس اثر می‌ذارن که بهشون می‌گیم <strong>نیروی غیرتماسی</strong>؛ مثل <strong>نیروی گرانش (جاذبه) زمین</strong> که توپ رو پایین می‌کشه، نیروی مغناطیسی آهنربا و نیروی الکتریکی (وقتی شانه پلاستیکی خرده‌های کاغذ رو جذب می‌کنه).» بچه‌ها یاد گرفتند که نیرو را با <strong>نیروسنج</strong> و با یکای <strong>نیوتون</strong> اندازه بگیرند.</p>
+                `,
+                notes: [
+                    "نیروهای تماسی: برای اثرگذاری نیاز به تماس دارند (مثل کشش طناب، اصطکاک، مقاومت هوا).",
+                    "نیروهای غیرتماسی: از فاصله دور اثر می‌گذارند (گرانشی، مغناطیسی، الکتریکی).",
+                    "نیروی اصطکاک همیشه در خلاف جهت حرکت (یا تمایل به حرکت) جسم عمل می‌کند.",
+                    "وسیله اندازه‌گیری نیرو «نیروسنج» و واحد آن «نیوتون» است."
+                ],
+                question: "چرا کف لاستیک خودروها و کفش‌های کوهنوردی آج‌دار است؟",
+                answer: "برای افزایش نیروی اصطکاک با زمین تا خودرو یا کوهنورد روی سطح‌های صاف و خیس لیز نخورد.",
+                bridge: "حالا که قانون نیروها را مثل مهندسان یاد گرفتیم، خانم دارابی یک مأموریت عملی به کلاس داد: بیایید خودمان طراحی کنیم و بسازیم!"
+            },
+            {
+                num: "فصل هشتم",
+                title: "طراحی کنیم و بسازیم (کارگاه مهندسان کوچک خیام)",
+                icon: "🛠️",
+                preview: "نوبت خلاقیت است! با فکر و دست‌های خودمان یک سازه آزمایشی طراحی و آزمایش می‌کنیم...",
+                story: `
+                    <p>میزهای کلاس تبدیل به کارگاه مهندسی شد! هر گروه با استفاده از بطری، چوب‌بستنی، کش و مقوا شروع به طراحی یک قایق کوچک کردند. خانم دارابی قدم‌به‌قدم راهنمایی می‌کرد: «یک مهندس اول <strong>ایده</strong> می‌ده، روی کاغذ <strong>طرح می‌کشه</strong>، مواد مناسب و ضدآب انتخاب می‌کنه، <strong>مدل</strong> رو می‌سازه و توی حوضچه آزمایشگاه امتحانش می‌کنه.»</p>
+                    <p>قایق گروه اول کج شد! اما بچه‌ها ناامید نشدند؛ تعادلش را اصلاح کردند تا درست روی آب بایستد. حالا قایق آماده بود، فقط یک مشکل داشت: برای اینکه خودش روی آب جلو برود، به چه چیزی نیاز داشت؟</p>
+                `,
+                notes: [
+                    "مراحل طراحی و ساخت مهندسی: مشخص کردن نیاز و مسئله ← ایده‌پردازی و رسم طرح ← انتخاب ابزار و مواد ← ساخت نمونه اولیه ← آزمایش و رفع عیب.",
+                    "همکاری گروهی و اصلاح اشتباهات، مهم‌ترین بخش کار مهندسی است.",
+                    "جنس بدنه سازه باید متناسب با کاربرد آن (مثلاً سبک و ضدآب برای قایق) انتخاب شود."
+                ],
+                question: "چرا در ساخت قایق آزمایشی باید به جای مقوای معمولی از پلاستیک یا چوب رنگ‌شده استفاده کرد؟",
+                answer: "چون مقوا آب را جذب کرده، خیس و سنگین می‌شود و استحکام خود را از دست می‌دهد؛ اما پلاستیک ضدآب است.",
+                bridge: "بچه‌ها یک کش و پروانه به قایق وصل کردند و کش را پیچاندند! تا رها کردند، قایق با سرعت حرکت کرد! راستی این نیرو و حرکت از کجا آمد؟ از سفر انرژی!"
+            },
+            {
+                num: "فصل نهم",
+                title: "سفر انرژی (رقص تبدیل‌های جادویی)",
+                icon: "⚡",
+                preview: "کشف بزرگ‌ترین قانون طبیعت: انرژی هیچ‌وقت نابود نمی‌شود، فقط لباسش را عوض می‌کند!",
+                story: `
+                    <p>بچه‌ها با ذوق به حرکت قایق نگاه می‌کردند و خانم دارابی راز بزرگ را گفت: «وقتی کش رو پیچوندید، داخلش <strong>انرژی پتانسیل کشسانی</strong> ذخیره شد. وقتی ولش کردید، تبدیل به <strong>انرژی جنبشی</strong> شد و قایق رو به جلو راند!»</p>
+                    <p>در ادامه، بچه‌ها دیدند که چطور انرژی مدام از شکلی به شکل دیگر سفر می‌کند: <strong>انرژی شیمیایی</strong> صبحانه‌ای که خورده‌اند به انرژی جنبشی عضلات تبدیل شده؛ <strong>انرژی الکتریکی</strong> در لامپ به نور و گرما تبدیل می‌شود؛ و حتی در سدها، انرژی پتانسیل آب پشت سد، توربین را می‌چرخاند و برق می‌سازد! خانم دارابی لبخند زد: «پس <strong>انرژی نه به وجود میاد و نه از بین می‌ره</strong>، فقط تبدیل می‌شه.»</p>
+                `,
+                notes: [
+                    "انواع انرژی: جنبشی (حرکتی)، پتانسیل (گرانشی، کشسانی، شیمیایی)، گرمایی، نورانی، صوتی و الکتریکی.",
+                    "قانون پایستگی انرژی: انرژی از بین نمی‌رود و خودبه‌خود به وجود نمی‌آید، بلکه از شکلی به شکل دیگر تبدیل می‌شود.",
+                    "در باتری و مواد غذایی، انرژی به صورت «شیمیایی» ذخیره شده است."
+                ],
+                question: "وقتی یک پنکه برقی را روشن می‌کنیم، چه تبدیل انرژی‌ای رخ می‌دهد؟",
+                answer: "انرژی الکتریکی (برق) به انرژی جنبشی (چرخش پره‌ها) و مقدار کمی انرژی صوتی و گرمایی تبدیل می‌شود.",
+                bridge: "اما یک سوال خیلی ریز باقی ماند: این انرژی شیمیایی غذا دقیقاً در کدام قسمت‌های کوچک بدن ما و گیاهان ذخیره و مصرف می‌شود؟ برای دیدنش باید خیلی کوچک شویم..."
+            },
+            {
+                num: "فصل دهم",
+                title: "خیلی کوچک، خیلی بزرگ (دنیای شگفت‌انگیز یاخته‌ها)",
+                icon: "🔬",
+                preview: "با چشم مسلح به میکروسکوپ وارد دنیای آجرهای کوچک سازنده موجودات زنده می‌شویم...",
+                story: `
+                    <p>چراغ‌های آزمایشگاه خاموش شد و نور <strong>میکروسکوپ</strong> روشن! خانم دارابی یک لایه بسیار نازک از پوست پیاز را زیر میکروسکوپ گذاشت. بچه‌ها با نوبت نگاه کردند و از تعجب دهانشان باز ماند: پوست پیاز مثل دیواری پر از اتاقک‌های منظم بود!</p>
+                    <p>خانم دارابی توضیح داد: «این اتاقک‌های بسیار ریز، <strong>یاخته (سلول)</strong> نام دارن؛ واحد سازنده بدن همه موجودات زنده، از یک باکتری تک‌یاخته‌ای گرفته تا نهنگ غول‌پیکر و خود شما!» بچه‌ها سه بخش اصلی یاخته یعنی <strong>غشا</strong> (نگهبان ورودی)، <strong>سیتوپلاسم</strong> (مایع درون یاخته) و <strong>هسته</strong> (مغز و مرکز فرماندهی) را دیدند و روی برگ گیاه، دانه‌های سبز کوچکی نظرشان را جلب کرد...</p>
+                `,
+                notes: [
+                    "واحد ساختار و عمل همه موجودات زنده «یاخته (سلول)» است.",
+                    "سه بخش اصلی در همه یاخته‌ها: ۱. هسته (کنترل‌کننده فعالیت‌ها) ۲. سیتوپلاسم ۳. غشای یاخته.",
+                    "یاخته‌های گیاهی علاوه بر این سه بخش، «دیواره یاخته‌ای» محکم و «سبزدیسه (کلروپلاست)» هم دارند.",
+                    "میکروسکوپ دارای دو عدسی مهم «چشمی» و «شیئی» است که بزرگ‌نمایی را ایجاد می‌کنند."
+                ],
+                question: "اگر دیواره یاخته‌ای را به دیوار آجری یک مدرسه تشبیه کنیم، کدام بخش یاخته مثل دفتر مدیریت (آقای سهرابی) همه کارها را مدیریت می‌کند؟",
+                answer: "«هسته»! چون هسته مرکز کنترل و فرماندهی تمام فعالیت‌های یاخته است.",
+                bridge: "بچه‌ها کنجکاو شدند بدانند آن دانه‌های سبز درون یاخته گیاهان چه کار مهمی انجام می‌دهند که جانِ تمام کره زمین به آن وابسته است..."
+            },
+            {
+                num: "فصل یازدهم",
+                title: "شگفتی‌های برگ (کارخانه خورشیدی طبیعت)",
+                icon: "🌿",
+                preview: "راز دانه سبز کلروفیل و چگونگی پخت غذای گیاهان با نور خورشید در برگ‌ها...",
+                story: `
+                    <p>خانم دارابی یک برگ سبز تازه آورد و راز آن دانه‌های سبز را گفت: «اون‌ها <strong>سبزینه (کلروفیل)</strong> هستن و برگ مثل یک آشپزخانه جادویی عمل می‌کنه!»</p>
+                    <p>بچه‌ها کشف کردند که گیاهان بر خلاف ما برای غذا خوردن دنبال شکار نمی‌روند؛ بلکه در عمل <strong>فتوسنتز (غذاسازی)</strong>، ریشه‌ها آب را از خاک می‌کشند، روزنه‌های ریز زیر برگ گاز <strong>کربن دی‌اکسید</strong> هوا را می‌گیرند و با کمک <strong>نور خورشید</strong> و سبزینه، ماده غذایی (قند و نشاسته) می‌سازند و به جای آن، <strong>اکسیژن</strong> پاک را به هوا می‌دهند تا ما نفس بکشیم!</p>
+                `,
+                notes: [
+                    "مواد مورد نیاز فتوسنتز: آب + کربن دی‌اکسید (با کمک نور خورشید و سبزینه).",
+                    "فرآورده‌های فتوسنتز: ماده غذایی (قند/نشاسته) + اکسیژن.",
+                    "تفاوت رنگ برگ‌ها در پاییز به خاطر تجزیه شدن سبزینه (کلروفیل) و نمایان شدن رنگدانه‌های زرد و نارنجی است."
+                ],
+                question: "چرا اگر یک گیاه را در کمد کاملاً تاریک بگذاریم، با وجود آبیاری کردن بعد از مدتی زرد و خشک می‌شود؟",
+                answer: "چون نور خورشید وجود ندارد و گیاه نمی‌تواند عمل فتوسنتز (غذاسازی) را انجام دهد.",
+                bridge: "حالا تصور کنید هزاران درخت پر از برگ کنار هم یک جنگل بزرگ بسازند! این جنگل خانه کیست و حیوانات چطور کنار هم زندگی می‌کنند؟"
+            },
+            {
+                num: "فصل دوازدهم",
+                title: "جنگل برای کیست؟ (شبکه بزرگ زندگی)",
+                icon: "🌲",
+                preview: "سفر به یک اکوسیستم زنده که در آن تولیدکننده، مصرف‌کننده و تجزیه‌کننده همکارند...",
+                story: `
+                    <p>داستان ما به یک جنگل سرسبز و پرصدا رسید! بچه‌ها دیدند که درخت‌ها و گیاهان به خاطر فتوسنتز، <strong>تولیدکننده</strong> هستند. خرگوش و گوزن با خوردن گیاهان و عقاب و گرگ با شکار کردن، نقش <strong>مصرف‌کننده</strong> را دارند. اما وقتی برگی می‌افتد یا حیوانی می‌میرد چه می‌شود؟</p>
+                    <p>خانم دارابی به خاک جنگل اشاره کرد: «اینجا قارچ‌ها و باکتری‌های مفید یعنی <strong>تجزیه‌کننده‌ها</strong> مثل رفتگران طبیعت بقایای مرده رو تجزیه می‌کنن و به کود برای رشد دوباره درخت‌ها تبدیل می‌کنن!» بچه‌ها فهمیدند که همه در یک <strong>شبکه غذایی</strong> به هم وصل هستند و جنگل متعلق به همه جانداران و نسل‌های آینده است؛ پس نباید آسیبش بزنیم.</p>
+                `,
+                notes: [
+                    "اجزای زنده زنجیره غذایی: ۱. تولیدکنندگان (گیاهان) ۲. مصرف‌کنندگان (حیوانات گیاه‌خوار، گوشت‌خوار و همه‌چیزخوار) ۳. تجزیه‌کنندگان (قارچ‌ها و باکتری‌ها).",
+                    "از به هم پیوستن چند زنجیره غذایی در طبیعت، «شبکه غذایی» به وجود می‌آید.",
+                    "قطع بی‌رویه درختان و آلودگی، تعادل کل شبکه غذایی جنگل را به هم می‌ریزد."
+                ],
+                question: "اگر تمام قارچ‌ها و باکتری‌های تجزیه‌کننده از جنگل حذف شوند، چه اتفاقی می‌افتد؟",
+                answer: "لاشه جانداران و برگ‌های ریخته شده روی زمین انباشته می‌شوند و مواد معدنی خاک برای رشد دوباره گیاهان تمام می‌شود.",
+                bridge: "باکتری‌های خاک به جنگل کمک می‌کردند؛ اما آیا همه میکروب‌ها و باکتری‌ها مفیدند؟ وقتش است به دنیای دفاع بدن انسان برویم..."
+            },
+            {
+                num: "فصل سیزدهم",
+                title: "سالم بمانیم (سربازان نامرئی درون بدن)",
+                icon: "🛡️",
+                preview: "آشنایی با میکروب‌های خوب و بد، گلبول‌های سفید جنگجو و راه‌های شکست بیماری...",
+                story: `
+                    <p>خانم دارابی توضیح داد که بعضی میکروب‌ها مفیدند (مثل باکتری‌های ماست‌سازی یا باکتری‌های مفید روده)، اما بعضی باکتری‌ها و ویروس‌ها بیماری‌زا هستند و از راه هوا، آب آلوده یا دست‌های کثیف وارد بدن می‌شوند.</p>
+                    <p>اما بدن ما بی‌دفاع نیست! اول <strong>پوست</strong> مثل یک دیوار محکم جلویشان را می‌گیرد؛ اگر هم زخمی پیش بیاید و میکروب وارد شود، سربازان شجاعی در خون به نام <strong>گلبول‌های سفید</strong> به سرعت حمله می‌کنند و میکروب‌ها را از بین می‌برند. با شستن مرتب دست‌ها، تغذیه سالم، ورزش و زدن <strong>واکسن</strong> می‌توانیم به این سربازان کمک کنیم تا همیشه سالم بمانیم.</p>
+                `,
+                notes: [
+                    "میکروب‌ها شامل باکتری‌ها، ویروس‌ها و برخی قارچ‌ها و آغازیان میکروسکوپی هستند.",
+                    "نخستین سد دفاعی بدن پوست، مژک‌های بینی و اسید معده است و در خون «گلبول‌های سفید» با میکروب‌ها می‌جنگند.",
+                    "واکسن با ضعیف یا بی‌اثر کردن میکروب، سیستم ایمنی بدن را برای مقابله با بیماری واقعی آماده می‌کند."
+                ],
+                question: "تفاوت اصلی باکتری‌ها با ویروس‌ها در تولیدمثل چیست؟",
+                answer: "باکتری‌ها یاخته کامل هستند و خودشان در محیط مناسب تکثیر می‌شوند؛ اما ویروس‌ها ساختار یاخته‌ای ندارند و فقط وقتی وارد یاخته زنده (مثل بدن انسان یا گیاه) شوند می‌توانند تکثیر شوند.",
+                bridge: "بچه‌ها تمام اسرار طبیعت و بدن را کشف کردند؛ حالا فقط یک سوال باقی مانده بود: چطور انسان‌ها از قدیم تا امروز این علم‌ها و خبرها را به گوش بقیه می‌رسانند؟"
+            },
+            {
+                num: "فصل چهاردهم",
+                title: "از گذشته تا آینده (پایان سفر، آغاز ارتباطات)",
+                icon: "🛰️",
+                preview: "از دود و کبوتر نامه‌بر تا ماهواره و اینترنت؛ یعنی دقیقاً همین سایتی که الان باز کرده‌اید!",
+                story: `
+                    <p>به آخرین ایستگاه ماجراجویی علمی دبستان خیام رسیدیم! خانم دارابی روی تخته خط زمانی کشید: «بچه‌ها، هزاران سال پیش انسان‌ها برای رسوندن پیام از <strong>دود آتش، صدای طبل، پیک و کبوتر نامه‌بر</strong> استفاده می‌کردن که خیلی زمان می‌برد.»</p>
+                    <p>«کم‌کم علم و فناوری پیشرفت کرد؛ <strong>چاپ، تلگراف (کد مورس)، تلفن، رادیو و تلویزیون</strong> اختراع شدن. و امروز با کمک <strong>ماهواره‌ها، فیبر نوری و اینترنت</strong>، پیام‌ها در کسری از ثانیه دور دنیا می‌چرخن! درست مثل همین لحظه که شما توی خونه یا کلاس، از طریق اینترنت وارد این سایت شدید و تمام ۱۴ فصل علوم رو با هم مرور کردیم!»</p>
+                    <p>زنگ آخر به صدا درآمد و بچه‌های کلاس ششم با کوله‌باری از دانش و کنجکاوی آماده شدند تا دانشمندان آینده ایران باشند. 🎓✨</p>
+                `,
+                notes: [
+                    "وسایل ارتباطی قدیمی: دود، آتش، طبل، پیک چاپاری، کبوتر نامه‌بر.",
+                    "وسایل ارتباطی جدید: تلگراف، تلفن، رادیو، تلویزیون، تلفن همراه، ماهواره و اینترنت.",
+                    "استفاده درست، ایمن و هدفمند از اینترنت و فضای مجازی (مثل آموزش و پژوهش) باعث پیشرفت علمی ما می‌شود."
+                ],
+                question: "مزیت اصلی ارتباطات اینترنتی و ماهواره‌ای امروزی نسبت به تلگراف و نامه کاغذی چیست؟",
+                answer: "سرعت فوق‌العاده بالا (ارسال فوری)، امکان انتقال هم‌زمان متن، صدا و تصویر، و دسترسی به اطلاعات علمی در سراسر جهان.",
+                bridge: "تبریک می‌گم قهرمان! 🎉 تمام ۱۴ فصل داستان علوم پایه ششم رو با موفقیت به پایان رسوندی. حالا می‌تونی دوباره فصل‌ها رو مرور کنی و برای امتحان آماده بشی!"
+            }
+        ];
+
+        let currentChapterIndex = 0;
+
+        // ساخت کارت‌های صفحه اصلی
+        function renderGrid() {
+            const grid = document.getElementById('chapters-grid');
+            grid.innerHTML = '';
+            chapters.forEach((ch, idx) => {
+                const card = document.createElement('div');
+                card.className = 'chapter-card';
+                card.style.animationDelay = `${idx * 0.05}s`;
+                card.onclick = () => openChapter(idx);
+                card.innerHTML = `
+                    <div>
+                        <div class="card-top">
+                            <span class="chap-num">${ch.num}</span>
+                            <span class="chap-icon">${ch.icon}</span>
+                        </div>
+                        <h4>${ch.title}</h4>
+                        <p>${ch.preview}</p>
+                    </div>
+                    <div class="card-cta">ورود به صفحه این فصل ←</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // باز کردن صفحه یک فصل
+        function openChapter(index) {
+            if (index < 0 || index >= chapters.length) return;
+            currentChapterIndex = index;
+            window.location.hash = `chapter-${index + 1}`;
+            showChapterView(index);
+        }
+
+        function showChapterView(index) {
+            const ch = chapters[index];
+            document.getElementById('home-page').style.display = 'none';
+            const chapPage = document.getElementById('chapter-page');
+            chapPage.style.display = 'block';
+
+            document.getElementById('page-progress').innerText = `فصل ${index + 1} از ${chapters.length}`;
+            document.getElementById('chap-icon-big').innerText = ch.icon;
+            document.getElementById('chap-badge-text').innerText = `${ch.num} • جزوه داستان‌وار خانم دارابی`;
+            document.getElementById('chap-title').innerText = ch.title;
+            document.getElementById('chap-story').innerHTML = ch.story;
+
+            const notesList = document.getElementById('chap-notes');
+            notesList.innerHTML = ch.notes.map(n => `<li>${n}</li>`).join('');
+
+            document.getElementById('chap-question').innerText = ch.question;
+            const ansBox = document.getElementById('chap-answer');
+            ansBox.style.display = 'none';
+            ansBox.innerText = ch.answer;
+
+            document.getElementById('chap-bridge').innerText = ch.bridge;
+
+            // دکمه‌های قبلی و بعدی
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+
+            btnPrev.style.visibility = index === 0 ? 'hidden' : 'visible';
+            if (index === chapters.length - 1) {
+                btnNext.innerText = '🏠 بازگشت به فهرست کل فصل‌ها';
+                btnNext.onclick = goHome;
+            } else {
+                btnNext.innerText = `ادامه داستان: فصل ${index + 2} ➡️`;
+                btnNext.onclick = () => navigateChapter(1);
+            }
+
+            document.title = `${ch.title} | علوم ششم دبستان خیام`;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goHome() {
+            window.location.hash = 'home';
+            document.getElementById('chapter-page').style.display = 'none';
+            document.getElementById('home-page').style.display = 'block';
+            document.title = 'سفر علمی ششم | دبستان پسرانه خیام';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function navigateChapter(step) {
+            const nextIdx = currentChapterIndex + step;
+            if (nextIdx >= 0 && nextIdx < chapters.length) {
+                openChapter(nextIdx);
+            }
+        }
+
+        function toggleAnswer() {
+            const ans = document.getElementById('chap-answer');
+            ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // پشتیبانی کامل از دکمه Back/Forward مرورگر مثل صفحات جداگانه
+        function handleHash() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#chapter-')) {
+                const num = parseInt(hash.replace('#chapter-', ''), 10);
+                if (num >= 1 && num <= chapters.length) {
+                    currentChapterIndex = num - 1;
+                    showChapterView(currentChapterIndex);
+                    return;
+                }
+            }
+            document.getElementById('chapter-page').style.display = 'none';
+            document.getElementById('home-page').style.display = 'block';
+        }
+
+        window.addEventListener('hashchange', handleHash);
+
+        renderGrid();
+        handleHash();
+    </script>
 </body>
 </html>
